@@ -31,5 +31,17 @@ class FileFetchView(APIView):
 
         return Response(serializer.data)
 
+class FileDeleteView(APIView):
+  permission_classes = []
+  
+  def post(self,request):
+    file_id = request.data['id']
+    try:
+      deleted_file = File.objects.get(pk=file_id)
+      deleted_file.delete()
+      return Response(status=status.HTTP_204_NO_CONTENT)
+    except:
+      return Response(status=status.HTTP_204_NO_CONTENT)
+
 # End point for uploading any file
-"http://127.0.0.1:8000/api/files"
+"http://127.0.0.1:8000/api/files/upload"
